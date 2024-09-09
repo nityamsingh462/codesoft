@@ -1,0 +1,119 @@
+import tkinter
+import random
+win = tkinter.Tk()
+
+win.configure(bg='pink')
+
+win.title('My To Do List')
+
+win.geometry('270x250')
+
+tasks = []
+
+
+
+# Create functions
+
+def update_listbox():
+   
+    clear_listbox()
+
+    
+    for task in tasks:
+        lb_tasks.insert("end", task)
+
+def clear_listbox():
+    lb_tasks.delete(0,"end")
+
+
+def add_task():
+    
+    task = text_input.get()
+    
+    if task != '':
+        tasks.append(task)
+        update_listbox()
+    else:
+        display['text'] = "Please enter a task!"
+    text_input.delete(0,'end')
+
+
+def delete():
+    task = lb_tasks.get('active')
+    if task in tasks:
+        tasks.remove(task)
+   
+    update_listbox()
+
+    display['text'] = "Task deleted!"
+
+def delete_all():
+    global tasks
+    
+    tasks = []
+
+    update_listbox()
+
+def choose_random():
+    task = random.choice(tasks)
+    display['text'] = task
+
+def number_of_task():
+    number_of_tasks = len(tasks)
+
+    msg = "Number of tasks : %s" %number_of_tasks
+    display['text'] = msg
+
+def exit():
+    quit()
+
+
+#Create Buttons and List options
+
+title = tkinter.Label(win, text = "To-Do-List", bg='lightyellow')
+title.grid(row=0,column=0)
+
+
+display = tkinter.Label(win, text = "", bg='white')
+display.grid(row=0,column=1)
+
+
+text_input = tkinter.Entry(win, width=15)
+text_input.grid(row=1,column=1)
+
+
+button_add_task = tkinter.Button(win, text = "Add Task", fg = 'black', bg = None, command = add_task)
+
+button_add_task.grid(row=1,column=0)
+
+button_delete = tkinter.Button(win, text = "Delete", fg = 'black', bg = None, command = delete)
+
+button_delete.grid(row=2,column=0)
+
+
+button_delete_all = tkinter.Button(win, text = "Delete All", fg = 'black', bg = None, command = delete_all)
+
+button_delete_all.grid(row=3,column=0)
+
+
+button_choose_random = tkinter.Button(win, text = "Choose Random", fg = 'black', bg = None, command = choose_random)
+
+button_choose_random.grid(row=4,column=0)
+
+
+button_number_of_task = tkinter.Button(win, text = "Number of Tasks", fg = 'black', bg = None, command = number_of_task)
+
+button_number_of_task.grid(row=5,column=0)
+
+
+button_close = tkinter.Button(win, text = "Exit", fg = 'black', bg = None, command = exit)
+
+button_close.grid(row=6,column=0)
+
+
+lb_tasks = tkinter.Listbox(win)
+lb_tasks.grid(row=2,column=1,rowspan=7)
+
+
+
+win.mainloop()
